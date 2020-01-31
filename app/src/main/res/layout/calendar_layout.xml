@@ -8,7 +8,7 @@
     android:id="@+id/activity_custom_calendar">
 
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/colorPrimary"
@@ -18,6 +18,31 @@
         android:id="@+id/calendarNavBar"
         android:layout_weight="0.8">
 
+        <ImageButton
+            android:id="@+id/previousBtn"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@drawable/left_arrow_img"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/currentDate"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/currentDate"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Current Date"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/backBtn"
@@ -27,34 +52,27 @@
             android:background="#00FFFFFF"
             android:onClick="onClick"
             android:scaleType="fitXY"
-            android:src="@drawable/back_icon" />
-
-        <ImageButton
-            android:id="@+id/previousBtn"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:background="@drawable/left_arrow_img" />
-
-        <TextView
-            android:id="@+id/currentDate"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="Current Date"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:src="@drawable/back_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.571" />
 
         <ImageButton
             android:id="@+id/nextBtn"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:background="@drawable/right_arrow_img" />
+            android:background="@drawable/right_arrow_img"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toEndOf="@+id/currentDate"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <LinearLayout
