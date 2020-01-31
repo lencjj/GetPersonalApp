@@ -1,6 +1,5 @@
 package com.example.personalapp.Entity;
 
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
