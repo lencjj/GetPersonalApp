@@ -28,6 +28,14 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <!--    JingHui's-->
+        <activity android:name=".MoneyManagement.MainActivity_MoneyManagement" />
+        <activity android:name=".MoneyManagement.InputValueScreen" />
+        <activity android:name=".MoneyManagement.AllListContents" />
+
+
+        <!--    JingHui's-->
     </application>
 
 </manifest>

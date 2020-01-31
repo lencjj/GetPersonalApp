@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.personalapp.MoneyManagement.MainActivity_MoneyManagement;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
@@ -132,6 +133,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.menuBtn:
                 drawerLayout.openDrawer(GravityCompat.START);
+                break;
+                // JingHui
+            case R.id.financeBtn:
+                Intent i1 = new Intent(this, MainActivity_MoneyManagement.class);
+                startActivity(i1);
                 break;
         }
     }
