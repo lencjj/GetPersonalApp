@@ -47,9 +47,9 @@ public abstract class ExpenseDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            expenseDao.insert(new Expense("Memo 1 ", 2.30));
-            expenseDao.insert(new Expense("Memo 2 ", 3.50));
-            expenseDao.insert(new Expense("Memo 3 ", 4.80));
+            expenseDao.insert(new Expense("default 1 ", 2.30));
+            expenseDao.insert(new Expense("default 2 ", 3.50));
+            expenseDao.insert(new Expense("default 3 ", 4.80));
             return null;
         }
     }

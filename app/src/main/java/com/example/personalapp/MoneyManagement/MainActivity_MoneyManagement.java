@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.personalapp.Adapters.ExpenseAdapter;
 import com.example.personalapp.ArchitectureComponents.ExpenseViewModel;
+import com.example.personalapp.MainActivity;
 import com.example.personalapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,7 @@ public class MainActivity_MoneyManagement extends AppCompatActivity {
     public static final int ADD_INCOME_REQUEST = 1;
     public static final int ADD_EXPENSE_REQUEST = 2;
     public static final int EDIT_EXPENSE_REQUEST = 3;
-    private TextView viewAll;
+    private TextView viewAllText, totalExpenseText, totalIncomeText, balanceText;
     private FloatingActionButton floatingActionButton;
     private ExpenseViewModel expenseViewModel;
     private ImageButton backButton;
@@ -42,7 +43,10 @@ public class MainActivity_MoneyManagement extends AppCompatActivity {
         setContentView(R.layout.activity_moneymanagement_main);
 
         // init
-        viewAll = (TextView) findViewById(R.id.viewAllExpenses);
+        viewAllText = (TextView) findViewById(R.id.viewAllExpenses);
+        totalExpenseText = (TextView) findViewById(R.id.totalExpenseText);
+//        totalIncomeText = (TextView) findViewById(R.id.totalIncomeText);
+//        balanceText = (TextView) findViewById(R.id.balanceText);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.addButton);
         final RecyclerView recyclerView = findViewById(R.id.recyclerview);
         backButton = (ImageButton) findViewById(R.id.backButton);
@@ -51,22 +55,19 @@ public class MainActivity_MoneyManagement extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                finish();
-//                onBackPressed(); // finish(); // it brings back to the previous activity
+                Intent i = new Intent(MainActivity_MoneyManagement.this, MainActivity.class);
+                startActivity(i);
             }
         });
         floatingActionButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                // choose INCOME or EXPENSE
                 Intent i = new Intent(MainActivity_MoneyManagement.this, InputValueScreen.class);
-//                startActivity(i);
                 startActivityForResult(i, ADD_EXPENSE_REQUEST);
 
             }
         });
-
-        viewAll.setOnClickListener(new View.OnClickListener(){
+        viewAllText.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity_MoneyManagement.this, AllListContents.class);
@@ -92,7 +93,7 @@ public class MainActivity_MoneyManagement extends AppCompatActivity {
 
 
 
-
+        // Livedata
         expenseViewModel = ViewModelProviders
                 .of(this) // the lifecycle will destroy the viewmodel when this activity is finished
                 .get(ExpenseViewModel.class); // this is the vm i want to get the instance of
@@ -106,6 +107,18 @@ public class MainActivity_MoneyManagement extends AppCompatActivity {
             }
 
         });
+        expenseViewModel.getTotalExpenses().observe(this, new Observer<Double>() {
+            @Override
+            public void onChanged(Double aDouble) {
+                    toastMassage(aDouble+"");
+                    totalExpenseText.setText("$ " + aDouble);
+
+            }
+        });
+
+        // set income
+        // filter date 
+
 
 
 
@@ -121,7 +134,6 @@ public class MainActivity_MoneyManagement extends AppCompatActivity {
 
             Expense expense = new Expense(memo, money);
             expense.setDate(formatter.format(date));
-//            toastMassage(expense.getDate());
             expenseViewModel.insert(expense);
             toastMassage("Saved!!!");
 

@@ -1,6 +1,7 @@
 package com.example.personalapp.Entity;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "expense_table")
@@ -14,6 +15,9 @@ public class Expense {
     private Double money;
 
     private String date;
+
+    @Ignore
+    private Double total;
 
     public Expense(String memo, double money) {
         this.memo = memo;
@@ -58,7 +62,5 @@ public class Expense {
         this.date = date;
     }
 
-    public void getToday(String today) {
 
-    }
 }

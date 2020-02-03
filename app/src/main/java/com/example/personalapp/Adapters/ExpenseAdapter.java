@@ -92,6 +92,7 @@ public class ExpenseAdapter extends ListAdapter<Expense, ExpenseAdapter.ExpenseH
         void onItemClick(Expense expense);
     }
 
+
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }

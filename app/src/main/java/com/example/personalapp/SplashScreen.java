@@ -15,7 +15,7 @@ public class SplashScreen extends Activity {
             public void run() {
                 try {
                     // sleep time in milliseconds (3000 = 3sec)
-                    sleep(3000);
+                    sleep(1);
                 }  catch(InterruptedException e) {
                     // Trace the error
                     e.printStackTrace();

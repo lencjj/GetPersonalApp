@@ -27,7 +27,13 @@ public interface ExpenseDao { // only provide methods
     void deleteAllExpenses();
 
     @Query("SELECT * FROM expense_table ORDER BY id DESC")
-    LiveData<List<Expense>> getAllNotes();  // LiveData can obverse the object,
+    LiveData<List<Expense>> getAllExpenses();  // LiveData can obverse the object,
     // if there are any changes in the table it will automatically be updated
+
+    // my gay gay method
+    @Query("SELECT SUM(money) FROM expense_table")
+    LiveData<Double> getTotalExpenses();
+
+
 
 }

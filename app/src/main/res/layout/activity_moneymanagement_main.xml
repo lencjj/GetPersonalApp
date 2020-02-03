@@ -69,7 +69,7 @@
             >
 
             <TextView
-                android:id="@+id/incomeValue_txt"
+                android:id="@+id/totalIncomeText"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -78,18 +78,18 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/spentValue_txt"
+                android:id="@+id/totalExpenseText"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="SPENT"
+                android:text="EXPENSE"
                 android:textSize="20sp"
 
                 />
 
             <TextView
-                android:id="@+id/balanceValue_txt"
+                android:id="@+id/balanceText"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -162,9 +162,8 @@
         android:padding="20dp"
         android:src="@drawable/ic_add"
         android:tint="#00FFFFFF"
-        app:backgroundTint="#FFFFFFFF"
+        app:backgroundTint="#E6FFFFFF"
         app:maxImageSize="36dp"
-        app:rippleColor="#00FFFFFF"
 
         >
 

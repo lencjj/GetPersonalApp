@@ -12,6 +12,7 @@ import com.example.personalapp.Entity.Expense;
 public class ExpenseViewModel extends AndroidViewModel {
     private ExpenseRepository repository;
     private LiveData<List<Expense>> allExpenses;
+    private LiveData<Double> totalExpenses;
 
 
 
@@ -19,6 +20,7 @@ public class ExpenseViewModel extends AndroidViewModel {
         super(application);
         repository = new ExpenseRepository(application);
         allExpenses = repository.getAllExpenses();
+        totalExpenses = repository.getTotalExpenses();
     }
 
     public void insert(Expense expense) {
@@ -36,5 +38,8 @@ public class ExpenseViewModel extends AndroidViewModel {
 
     public LiveData<List<Expense>> getAllExpenses() {
         return allExpenses;
+    }
+    public LiveData<Double> getTotalExpenses() {
+        return totalExpenses;
     }
 }

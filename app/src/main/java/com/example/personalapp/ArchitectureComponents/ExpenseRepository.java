@@ -13,6 +13,7 @@ public class ExpenseRepository {
 
     private ExpenseDao expenseDao;
     private LiveData<List<Expense>> allExpenses;
+    private LiveData<Double> totalExpenses;
 
     public ExpenseRepository(Application application) {     // application is a subclass of context,
         // use it as a context to create database instance
@@ -23,7 +24,8 @@ public class ExpenseRepository {
         // but i created instance w the databaseBuilder,
         // Room auto-generate all the codes for this method
 
-        allExpenses = expenseDao.getAllNotes();
+        allExpenses = expenseDao.getAllExpenses();
+        totalExpenses = expenseDao.getTotalExpenses();
     } // End of ER
 
     // methods here are the APIs for the outside to call
@@ -44,6 +46,9 @@ public class ExpenseRepository {
     // Room will auto execute the database on the background, but the method above: insert, update, delete, deleteAllExpenses
     public LiveData<List<Expense>> getAllExpenses() {
         return allExpenses;
+    }
+    public LiveData<Double> getTotalExpenses() {
+        return totalExpenses;
     }
 
 
