@@ -4,14 +4,19 @@ package com.example.personalapp.MoneyManagement;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.example.personalapp.Adapters.ExpenseAdapter;
 import com.example.personalapp.ArchitectureComponents.ExpenseViewModel;
 import com.example.personalapp.Entity.Expense;
 import com.example.personalapp.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -23,11 +28,23 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class AllListContents extends AppCompatActivity {
+public class AllListContents extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     public static final int ADD_EXPENSE_REQUEST = 1;
     public static final int EDIT_EXPENSE_REQUEST = 2;
     private ExpenseViewModel expenseViewModel;
     private ImageButton backButton, deleteAllButton;
+    private Spinner spinner;
+    ExpenseAdapter adapter;
+
+    // yyyyMMddHHmmss
+    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy");
+    SimpleDateFormat monthFormatter = new SimpleDateFormat("MM");
+    SimpleDateFormat dayFormatter = new SimpleDateFormat("dd");
+    SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm:ss aa");
+    Date date = new Date();
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,15 +54,23 @@ public class AllListContents extends AppCompatActivity {
         // init
         backButton = (ImageButton) findViewById(R.id.backButton);
         deleteAllButton = (ImageButton) findViewById(R.id.deleteAllButton);
+        spinner = findViewById(R.id.spinner);
+        ArrayAdapter<CharSequence> arrayAdapter =
+                ArrayAdapter.createFromResource(this, R.array.months, android.R.layout.simple_spinner_item);
+
+
+
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinner.setAdapter(arrayAdapter);
+        spinner.setOnItemSelectedListener(this);
+
 
 
         // OnClick
         backButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                // handle diff req
-
-
                 Intent i = new Intent(AllListContents.this, MainActivity_MoneyManagement.class);
                 startActivity(i);
             }
@@ -55,7 +80,12 @@ public class AllListContents extends AppCompatActivity {
             public void onClick(View view) {
                 // deleteAll
                 // cfm msg
-                expenseViewModel.deleteAllExpenses();
+
+
+
+
+
+//                expenseViewModel.deleteAllExpenses();
                 toastMassage("You deleted all the record(s)!");
             }
         });
@@ -66,7 +96,8 @@ public class AllListContents extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
-        final ExpenseAdapter adapter = new ExpenseAdapter();
+//        final ExpenseAdapter adapter = new ExpenseAdapter();
+        adapter = new ExpenseAdapter();
         recyclerView.setAdapter(adapter);
 
 
@@ -125,8 +156,6 @@ public class AllListContents extends AppCompatActivity {
             }
         }).attachToRecyclerView(recyclerView);
 
-
-        // BACK HERE (TO DECIDE ＩＮＣＯＭＥ or ..
         adapter.setOnItemClickListener(new ExpenseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Expense expense) {
@@ -144,17 +173,7 @@ public class AllListContents extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_EXPENSE_REQUEST && resultCode == RESULT_OK) { // i can find which req i handle
-            String memo = data.getStringExtra(InputValueScreen.EXTRA_MEMO);
-            Double money = Double.parseDouble(data.getStringExtra(InputValueScreen.EXTRA_MONEY));
-
-            Expense expense = new Expense(memo, money);
-
-            expenseViewModel.insert(expense);
-
-            toastMassage("Saved!!!");
-
-        } else if (requestCode == EDIT_EXPENSE_REQUEST && resultCode == RESULT_OK) {
+        if (requestCode == EDIT_EXPENSE_REQUEST && resultCode == RESULT_OK) {
             int id = data.getIntExtra(InputValueScreen.EXTRA_ID, -1);
 
             if (id == -1) {
@@ -169,6 +188,11 @@ public class AllListContents extends AppCompatActivity {
             Expense expense = new Expense(memo, money);
 
             expense.setId(id);
+            expense.setDate(dateFormatter.format(date));
+            expense.setYear(yearFormatter.format(date));
+            expense.setMonth(monthFormatter.format(date));
+            expense.setDay(dayFormatter.format(date));
+            expense.setTime(timeFormatter.format(date));
 
             expenseViewModel.update(expense);
 
@@ -181,8 +205,145 @@ public class AllListContents extends AppCompatActivity {
     }
 
 
+
+    // spinner
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (i) {
+            case 0:
+                toastMassage("All record(s)");
+                expenseViewModel.getAllExpenses().observe(this, new Observer<List<Expense>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Expense> expenses) {
+                        adapter.submitList(expenses);
+                    }
+                });
+                break;
+            case 1:
+                toastMassage("Record(s) in January");
+                expenseViewModel.getJanExpenses().observe(this, new Observer<List<Expense>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Expense> expenses) {
+                        adapter.submitList(expenses);
+                    }
+                });
+
+                break;
+            case 2:
+                toastMassage("Record(s) in February");
+                expenseViewModel.getFebExpenses().observe(this, new Observer<List<Expense>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Expense> expenses) {
+                        adapter.submitList(expenses);
+                    }
+                });
+                break;
+            case 3:
+                toastMassage("Record(s) in March");
+                expenseViewModel.getMarExpenses().observe(this, new Observer<List<Expense>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Expense> expenses) {
+                        adapter.submitList(expenses);
+                    }
+                });
+                break;
+            case 4:
+                toastMassage("Record(s) in April");
+                expenseViewModel.getAprExpenses().observe(this, new Observer<List<Expense>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Expense> expenses) {
+                        adapter.submitList(expenses);
+                    }
+                });
+                break;
+            case 5:
+                toastMassage("Record(s) in May");
+                expenseViewModel.getMayExpenses().observe(this, new Observer<List<Expense>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Expense> expenses) {
+                        adapter.submitList(expenses);
+                    }
+                });
+                break;
+            case 6:
+                toastMassage("Record(s) in June");
+                expenseViewModel.getJunExpenses().observe(this, new Observer<List<Expense>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Expense> expenses) {
+                        adapter.submitList(expenses);
+                    }
+                });
+                break;
+            case 7:
+                toastMassage("Record(s) in July");
+                expenseViewModel.getJulExpenses().observe(this, new Observer<List<Expense>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Expense> expenses) {
+                        adapter.submitList(expenses);
+                    }
+                });
+                break;
+            case 8:
+                toastMassage("Record(s) in August");
+                expenseViewModel.getAugExpenses().observe(this, new Observer<List<Expense>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Expense> expenses) {
+                        adapter.submitList(expenses);
+                    }
+                });
+                break;
+            case 9:
+                toastMassage("Record(s) in September");
+                expenseViewModel.getSepExpenses().observe(this, new Observer<List<Expense>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Expense> expenses) {
+                        adapter.submitList(expenses);
+                    }
+                });
+                break;
+            case 10:
+                toastMassage("Record(s) in October");
+                expenseViewModel.getOctExpenses().observe(this, new Observer<List<Expense>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Expense> expenses) {
+                        adapter.submitList(expenses);
+                    }
+                });
+                break;
+            case 11:
+                toastMassage("Record(s) in November");
+                expenseViewModel.getNovExpenses().observe(this, new Observer<List<Expense>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Expense> expenses) {
+                        adapter.submitList(expenses);
+                    }
+                });
+                break;
+            case 12:
+                toastMassage("Record(s) in December");
+                expenseViewModel.getDecExpenses().observe(this, new Observer<List<Expense>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Expense> expenses) {
+                        adapter.submitList(expenses);
+                    }
+                });
+                break;
+        }
+    }
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+
+
+
+
+
+
     private void toastMassage(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
 
 }

@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.personalapp.Entity.Expense;
 
-@Database(entities = {Expense.class}, version = 1, exportSchema = false) // added  exportSchema = false
+@Database(entities = {Expense.class}, version = 2, exportSchema = false) // added  exportSchema = false
 public abstract class ExpenseDatabase extends RoomDatabase {
 
     private static ExpenseDatabase instance; // instance means 1 (single) cant create multiple instance

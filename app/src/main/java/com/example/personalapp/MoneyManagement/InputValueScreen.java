@@ -45,6 +45,7 @@ public class InputValueScreen extends AppCompatActivity { // input form doesnt c
         inputMemoText = (EditText) findViewById(R.id.inputMemo_txt);
         inputMoneyText = (EditText) findViewById(R.id.inputMoney_txt);
         save_as_expense_btn = (Button) findViewById(R.id.save_as_expense_btn);
+        save_as_income_btn = (Button) findViewById(R.id.save_as_income_btn);
 
         // Method set to 2 decimal
         inputMoneyText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(5, 2)});
@@ -76,11 +77,12 @@ public class InputValueScreen extends AppCompatActivity { // input form doesnt c
         Intent intent = getIntent();
 
         // INCOME decision HERE
-        if (intent.hasExtra(EXTRA_ID)) { // true if it contains
+        if (intent.hasExtra(EXTRA_ID)) { // Edit needs id to check, true if it contains
             title.setText("Edit ");
-//            toastMassage(intent.getDoubleExtra(EXTRA_MONEY, 0.0)+"!");
+            save_as_expense_btn.setText("save");
+            save_as_income_btn.setVisibility(View.INVISIBLE);
             inputMemoText.setText(intent.getStringExtra(EXTRA_MEMO));
-            inputMoneyText.setText(intent.getDoubleExtra(EXTRA_MONEY, 0.00)+"");
+            inputMoneyText.setText(intent.getDoubleExtra(EXTRA_MONEY, 0.00)+"0");
 
         } else {
             title.setText("Add ");

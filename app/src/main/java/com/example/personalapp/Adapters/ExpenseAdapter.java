@@ -34,10 +34,10 @@ public class ExpenseAdapter extends ListAdapter<Expense, ExpenseAdapter.ExpenseH
         @Override
         public boolean areContentsTheSame(@NonNull Expense oldItem, @NonNull Expense newItem) {
             return (
-                    oldItem.getMemo().equals(newItem.getMemo())
-                            &&
-                            // compare double
-                            Double.parseDouble(oldItem.getMoney().toString()) == Double.parseDouble(newItem.getMoney().toString())
+                oldItem.getMemo().equals(newItem.getMemo())
+                &&
+                // compare double
+                Double.parseDouble(oldItem.getMoney().toString()) == Double.parseDouble(newItem.getMoney().toString())
             );
         }
     };
@@ -55,7 +55,9 @@ public class ExpenseAdapter extends ListAdapter<Expense, ExpenseAdapter.ExpenseH
     public void onBindViewHolder(@NonNull ExpenseHolder holder, int position) {
         Expense currentExpense = getItem(position);
         holder.textViewMemo.setText(currentExpense.getMemo());
-        holder.textViewMoney.setText(String.valueOf(currentExpense.getMoney()));
+        holder.textViewDate.setText(currentExpense.getDate());
+        holder.textViewTime.setText(currentExpense.getTime());
+        holder.textViewMoney.setText(currentExpense.getMoney()+"0");
     }
 
     public Expense getExpenseAt(int position) { // LIDDAT ALSO CAN UH WTF SICK
@@ -65,12 +67,17 @@ public class ExpenseAdapter extends ListAdapter<Expense, ExpenseAdapter.ExpenseH
 
     class ExpenseHolder extends RecyclerView.ViewHolder {
         private TextView textViewMemo;
+        private TextView textViewDate;
+        private TextView textViewTime;
         private TextView textViewMoney;
 
         public ExpenseHolder(View itemView) {
             super(itemView); // card itself
             textViewMemo = itemView.findViewById(R.id.cardtextview_memo);
+            textViewDate = itemView.findViewById(R.id.cardtextview_date);
+            textViewTime = itemView.findViewById(R.id.cardtextview_time);
             textViewMoney = itemView.findViewById(R.id.cardtextview_money);
+
 
             // call the customised methods
             itemView.setOnClickListener(new View.OnClickListener() {

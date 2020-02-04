@@ -33,7 +33,11 @@ public class MainActivity_MoneyManagement extends AppCompatActivity {
     private ImageButton backButton;
 
     // yyyyMMddHHmmss
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat yearFormatter = new SimpleDateFormat("yyyy");
+    SimpleDateFormat monthFormatter = new SimpleDateFormat("MM");
+    SimpleDateFormat dayFormatter = new SimpleDateFormat("dd");
+    SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm:ss aa");
     Date date = new Date();
 
 
@@ -88,7 +92,6 @@ public class MainActivity_MoneyManagement extends AppCompatActivity {
 //        });
 
         final ExpenseAdapter adapter = new ExpenseAdapter();
-
         recyclerView.setAdapter(adapter);
 
 
@@ -97,27 +100,32 @@ public class MainActivity_MoneyManagement extends AppCompatActivity {
         expenseViewModel = ViewModelProviders
                 .of(this) // the lifecycle will destroy the viewmodel when this activity is finished
                 .get(ExpenseViewModel.class); // this is the vm i want to get the instance of
-        expenseViewModel.getAllExpenses().observe(this, new Observer<List<Expense>>() {
+        expenseViewModel.getTodayExpenses().observe(this, new Observer<List<Expense>>() {
             @Override
             public void onChanged(@Nullable List<Expense> expenses) { // will be triggered every time when the data changes
                 adapter.submitList(expenses);
                 // TO FIX TOP
 //                recyclerView.smoothScrollToPosition(0);
-
             }
 
         });
         expenseViewModel.getTotalExpenses().observe(this, new Observer<Double>() {
             @Override
             public void onChanged(Double aDouble) {
-                    toastMassage(aDouble+"");
-                    totalExpenseText.setText("$ " + aDouble);
+//                toastMassage("Checking: total is $" + aDouble);
+                totalExpenseText.setText("$ " + aDouble + "0");
 
             }
         });
 
         // set income
-        // filter date 
+        // filter date
+//        expenseViewModel.getYearsInRecord().observe(this, new Observer<Integer>() {
+//            @Override
+//            public void onChanged(Integer aInteger) {
+//                toastMassage("Checking: year is " + aInteger);
+//            }
+//        });
 
 
 
@@ -128,32 +136,22 @@ public class MainActivity_MoneyManagement extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // convert
+//        TimestampConverter timestampConverter = new TimestampConverter();
+
         if (requestCode == ADD_EXPENSE_REQUEST && resultCode == RESULT_OK) { // i can find which req i handle
             String memo = data.getStringExtra(InputValueScreen.EXTRA_MEMO);
             Double money = Double.parseDouble(data.getStringExtra(InputValueScreen.EXTRA_MONEY));
 
             Expense expense = new Expense(memo, money);
-            expense.setDate(formatter.format(date));
+            expense.setDate(dateFormatter.format(date));
+            expense.setYear(yearFormatter.format(date));
+            expense.setMonth(monthFormatter.format(date));
+            expense.setDay(dayFormatter.format(date));
+            expense.setTime(timeFormatter.format(date));
+
             expenseViewModel.insert(expense);
             toastMassage("Saved!!!");
-
-        } else if (requestCode == EDIT_EXPENSE_REQUEST && resultCode == RESULT_OK) {
-            int id = data.getIntExtra(InputValueScreen.EXTRA_ID, -1);
-
-            if (id == -1) { // sth goes wrong
-                toastMassage("Cant be updated!");
-                return;
-            }
-
-            String memo = data.getStringExtra(InputValueScreen.EXTRA_MEMO);
-            Double money = Double.parseDouble(data.getStringExtra(InputValueScreen.EXTRA_MONEY));
-
-            Expense expense = new Expense(memo, money);
-            expense.setId(id);
-
-            expenseViewModel.update(expense);
-
-            toastMassage("Updated!");
 
         } else {
             toastMassage("Not saved..");
@@ -162,8 +160,11 @@ public class MainActivity_MoneyManagement extends AppCompatActivity {
 
 
 
+
     private void toastMassage(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
+
 
 }

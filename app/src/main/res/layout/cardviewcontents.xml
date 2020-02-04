@@ -32,6 +32,25 @@
             android:text="memo"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
+        <TextView
+            android:id="@+id/cardtextview_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="date"
+            android:layout_below="@id/cardtextview_memo"
+            />
+
+        <TextView
+            android:id="@+id/cardtextview_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="time"
+            android:layout_below="@id/cardtextview_memo"
+            android:layout_toEndOf="@+id/cardtextview_date"
+            android:layout_marginLeft="6dp"
+
+
+            />
 
     </RelativeLayout>
 
