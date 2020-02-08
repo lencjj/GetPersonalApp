@@ -28,6 +28,10 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        //Kristine
+        <activity android:name=".JournalEntry.MainActivity_JournalEntry"/>
+        <activity android:name=".JournalEntry.AddEditJournalEntryActivity"/>
     </application>
 
 </manifest>
