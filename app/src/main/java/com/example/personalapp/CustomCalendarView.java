@@ -12,7 +12,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,12 +21,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,9 +48,7 @@ public class CustomCalendarView extends LinearLayout {
     AlertDialog alertDialog;
     ArrayList<Date> dates = new ArrayList<>();
     ArrayList<Event> eventList = new ArrayList<>();
-
     DBHelper dbHelper;
-    public static int height;
 
     public CustomCalendarView(Context context){
         super(context);
@@ -66,6 +60,7 @@ public class CustomCalendarView extends LinearLayout {
         InitializeLayout();
         SetUpCalendar();
 
+        //To navigate from one month to another
         prevBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +78,7 @@ public class CustomCalendarView extends LinearLayout {
         });
 
 
+        //On click to add an event
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -124,7 +120,7 @@ public class CustomCalendarView extends LinearLayout {
                 alertDialog = builder.create();
                 alertDialog.show();
 
-
+                //Disable and enable add button
                 eventName.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -163,6 +159,7 @@ public class CustomCalendarView extends LinearLayout {
 
         });
 
+        //On long click to view the events for that day
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -223,20 +220,22 @@ public class CustomCalendarView extends LinearLayout {
     }
 
     private void SetUpCalendar(){
-        int firstDayOfTheMonth = 0;
+        int firstDayOfTheMonth;
         String currDate = dateFormat.format(calendar.getTime());
         currentDate.setText(currDate);
         dates.clear();
+
         Calendar monthCalendar = (Calendar)calendar.clone();
         monthCalendar.set(Calendar.DAY_OF_MONTH,1); //Set to first day of the month
         if (monthCalendar.get((Calendar.DAY_OF_WEEK)) == 1){
-            firstDayOfTheMonth = monthCalendar.get(Calendar.DAY_OF_WEEK) + 5; //in the case that sunday is first day of the month.
+            firstDayOfTheMonth = monthCalendar.get(Calendar.DAY_OF_WEEK) + 5; //in the case that sunday is first day of the month, Sunday = 1
         }
         else{
             firstDayOfTheMonth = monthCalendar.get(Calendar.DAY_OF_WEEK) - 2; //-2 because Mon = 2
         }
         monthCalendar.add(Calendar.DAY_OF_MONTH, -firstDayOfTheMonth); //To make Calendar date start from Monday
         CollectEventsPerMonth(monthFormat.format(calendar.getTime()), yearFormat.format(calendar.getTime()));
+
         while(dates.size() < MAX_CALENDAR_DAYS){
             dates.add(monthCalendar.getTime());
             monthCalendar.add(Calendar.DAY_OF_MONTH, 1);
