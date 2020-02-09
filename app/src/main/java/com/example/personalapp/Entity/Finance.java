@@ -4,8 +4,8 @@ package com.example.personalapp.Entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "expense_table")
-public class Expense {
+@Entity(tableName = "finance_table")
+public class Finance {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -16,6 +16,8 @@ public class Expense {
 
     private String date;
 
+    private String yearmonth;
+
     private String year;
 
     private String month;
@@ -24,26 +26,21 @@ public class Expense {
 
     private String time;
 
-//    private String time;
-//    @Ignore
-//    private String dateOnly, timeOnly;  // will rename
+    private String type;
 
 
-    public Expense(String memo, double money) {
+
+
+    public Finance(String memo, Double money) {
         this.memo = memo;
         this.money = money;
     }
 
-//    public Expense(int id, String memo, double money) {
-//        this.id = id;
-//        this.memo = memo;
-//        this.money = money;
-//    }
+
 
     public int getId() {
         return id;
     }
-
     public String getMemo() {
         return memo;
     }
@@ -56,6 +53,9 @@ public class Expense {
     public String getYear() {
         return year;
     }
+    public String getYearmonth() {
+        return yearmonth;
+    }
     public String getMonth() {
         return month;
     }
@@ -64,6 +64,9 @@ public class Expense {
     }
     public String getTime() {
         return time;
+    }
+    public String getType() {
+        return type;
     }
 
 
@@ -82,6 +85,9 @@ public class Expense {
     public void setYear(String year) {
         this.year = year;
     }
+    public void setYearmonth(String yearmonth) {
+        this.yearmonth = yearmonth;
+    }
     public void setMonth(String month) {
         this.month = month;
     }
@@ -90,6 +96,9 @@ public class Expense {
     }
     public void setTime(String time) {
         this.time = time;
+    }
+    public void setType(String type) {
+        this.type = type;
     }
 
 
