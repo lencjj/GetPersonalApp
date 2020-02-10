@@ -1,20 +1,24 @@
 package com.example.personalapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.personalapp.JournalEntry.MainActivity_JournalEntry;
 import com.example.personalapp.MoneyManagement.MainActivity_Finance;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,7 +29,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -128,10 +135,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.menuBtn:
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
-                // JingHui
             case R.id.financeBtn:
-                Intent i1 = new Intent(this, MainActivity_Finance.class);
-                startActivity(i1);
+                Intent i2 = new Intent(this, MainActivity_Finance.class);
+                startActivity(i2);
+                break;
+            case R.id.noteBtn:
+                Intent i3 = new Intent(this, MainActivity_JournalEntry.class);
+                startActivity(i3);
                 break;
         }
     }

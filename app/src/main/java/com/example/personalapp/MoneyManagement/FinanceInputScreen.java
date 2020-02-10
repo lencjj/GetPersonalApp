@@ -137,6 +137,7 @@ public class FinanceInputScreen extends AppCompatActivity { // input form doesnt
             Double negative = Double.parseDouble(strInputMoney) - (2 * (Double.parseDouble(strInputMoney)));
             strInputMoney = negative.toString();
         }
+
         // To send data back the activity
         Intent newData = new Intent();
         newData.putExtra(EXTRA_MEMO, strInputMemo);

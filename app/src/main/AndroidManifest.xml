@@ -35,6 +35,12 @@
         <receiver android:name=".MoneyManagement.FinanceReminderBroadcast" />
         <!--    JingHui's-->
 
+<!--        Kristine-->
+        <activity android:name=".JournalEntry.MainActivity_JournalEntry" />
+        <activity android:name=".JournalEntry.AddEditJournalEntryActivity" />
+
+
+
 
     </application>
 
