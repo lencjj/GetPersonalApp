@@ -31,9 +31,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" /> <!-- JingHui's -->
-        <activity android:name=".MoneyManagement.MainActivity_MoneyManagement" />
-        <activity android:name=".MoneyManagement.InputValueScreen" />
-        <activity android:name=".MoneyManagement.AllListContents" />
+        <activity android:name=".MoneyManagement.MainActivity_Finance" />
+        <activity android:name=".MoneyManagement.FinanceInputScreen" />
+        <receiver android:name=".MoneyManagement.FinanceReminderBroadcast" />
         <activity android:name=".JournalEntry.MainActivity_JournalEntry"/>
         <activity android:name=".JournalEntry.AddEditJournalEntryActivity"/>
     </application>

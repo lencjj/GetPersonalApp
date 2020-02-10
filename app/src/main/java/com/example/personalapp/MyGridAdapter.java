@@ -53,6 +53,7 @@ public class MyGridAdapter extends ArrayAdapter {
         //get the current month and year
         int currentMonth = currentDate.get(Calendar.MONTH);
         int currentYear = currentDate.get(Calendar.YEAR);
+        int currentDay = currentDate.get(Calendar.DAY_OF_MONTH);
 
         View view = convertView;
 
@@ -62,12 +63,18 @@ public class MyGridAdapter extends ArrayAdapter {
 
         if(displayMonth == currentMonth && displayYear == currentYear){
             view.setMinimumHeight((parent.getHeight()/6) - (2 * (MainActivity.dpi/160)));
-
         }
+
         else{//days that are not actually part of the month
             view.setMinimumHeight((parent.getHeight()/6) - (2 * (MainActivity.dpi/160)));
             TextView textView = (TextView) view.findViewById(R.id.calendar_day);
             textView.setTextColor(getContext().getResources().getColor(R.color.opacitywhite));
+        }
+
+        // Set today's date cell to a different colour
+        Calendar calendar = Calendar.getInstance();
+        if(displayMonth == calendar.get(Calendar.MONTH) && displayYear == calendar.get(Calendar.YEAR) && dayNo == calendar.get(Calendar.DAY_OF_MONTH)){
+            view.setBackgroundColor(getContext().getResources().getColor(R.color.beige));
         }
 
 
@@ -75,7 +82,7 @@ public class MyGridAdapter extends ArrayAdapter {
         dayNumber.setText(String.valueOf(dayNo));
 
         Calendar eventCalendar = Calendar.getInstance();
-        int remainSpace = (parent.getHeight()/6) - (2 * (MainActivity.dpi/160)) - (30 * (MainActivity.dpi/160)); //remaining space left in the grid cell to display notes
+        int remainSpace = (parent.getHeight()/6) - (2 * (MainActivity.dpi/160)) - (38 * (MainActivity.dpi/160)); //remaining space left in the grid cell to display notes
         int numOfNotes = remainSpace/51; //number of notes the grid cell can container
         int numOfEvents = 0; // number of events on the specific day
         int count = 0;

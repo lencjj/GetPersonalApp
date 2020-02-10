@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.personalapp.JournalEntry.MainActivity_JournalEntry;
-import com.example.personalapp.MoneyManagement.MainActivity_MoneyManagement;
+import com.example.personalapp.MoneyManagement.MainActivity_Finance;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
                 // JingHui
             case R.id.financeBtn:
-                Intent i1 = new Intent(this, MainActivity_MoneyManagement.class);
+                Intent i1 = new Intent(this, MainActivity_Finance.class);
                 startActivity(i1);
                 break;
             case R.id.noteBtn:
