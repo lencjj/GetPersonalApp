@@ -34,9 +34,6 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     Context context;
     ArrayList<Event> arrayList;
     DBHelper dbHelper;
-    SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM", Locale.ENGLISH);
-    SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.ENGLISH);
-    SimpleDateFormat eventDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
     public EventRecyclerAdapter(Context context, ArrayList<Event> arrayList){
         this.context = context;
@@ -58,6 +55,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
         holder.dateText.setText(event.getDate());
         holder.time.setText(event.getTime());
 
+        //delete event on click activity
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +91,7 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
             }
         });
 
+        //edit event on click activity
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -105,11 +104,38 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
                 final Button addEventBtn = popupView.findViewById(R.id.addEventBtn);
 
                 eventName.setText(event.getEvent());
+                eventName.setSelection(eventName.getText().length());
                 eventTime.setText(event.getTime());
                 addEventBtn.setText("SAVE");
                 addEventBtn.setEnabled(true);
                 addEventBtn.setBackgroundColor(Color.WHITE);
                 addEventBtn.setTextColor(Color.BLACK);
+
+                //Disable and enable add button
+                eventName.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        String eventNameInput = eventName.getText().toString().trim();
+                        addEventBtn.setEnabled(!eventNameInput.isEmpty());
+                        if (addEventBtn.isEnabled()){
+                            addEventBtn.setBackgroundColor(Color.WHITE);
+                            addEventBtn.setTextColor(Color.BLACK);
+                        }
+                        else if (!addEventBtn.isEnabled()){
+                            addEventBtn.setBackgroundColor(popupView.getContext().getResources().getColor(R.color.opacitywhite));
+                            addEventBtn.setTextColor(Color.rgb(170, 170, 170));
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                    }
+                });
 
                 setTimeBtn.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -16,6 +16,7 @@ public class FinanceRepository {
     private LiveData<List<Finance>> allFinanceRecords, todayFinanceRecords;
     private LiveData<Double> totalExpenses, totalIncomes, totalExpensesByToday, totalIncomesByToday, balanceByToday, balanceByYearmonth;
     private LiveData<List<String>> yearsInRecord;
+    private LiveData<Finance> lastRecord;
 
 
 
@@ -38,7 +39,7 @@ public class FinanceRepository {
         balanceByToday = financeDao.getBalanceByToday();
 
         yearsInRecord  = financeDao.getYearsInRecord();
-
+        lastRecord = financeDao.getLastRecord();
 
 
 
@@ -110,7 +111,7 @@ public class FinanceRepository {
     public LiveData<List<String>> getYearsInRecord() {
         return yearsInRecord;
     }
-
+    public LiveData<Finance> getLastRecord() { return lastRecord; }
 
 
 

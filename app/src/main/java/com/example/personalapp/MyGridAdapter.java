@@ -53,42 +53,50 @@ public class MyGridAdapter extends ArrayAdapter {
         //get the current month and year
         int currentMonth = currentDate.get(Calendar.MONTH);
         int currentYear = currentDate.get(Calendar.YEAR);
+        int currentDay = currentDate.get(Calendar.DAY_OF_MONTH);
 
         View view = convertView;
 
         if(view == null){
             view = inflater.inflate(R.layout.single_cell_layout, parent, false);
-            view.setMinimumHeight((parent.getHeight()/6) - (2 * (MainActivity.dpi/160)));
         }
 
         if(displayMonth == currentMonth && displayYear == currentYear){
             view.setMinimumHeight((parent.getHeight()/6) - (2 * (MainActivity.dpi/160)));
-
         }
-        else{
+
+        else{//days that are not actually part of the month
             view.setMinimumHeight((parent.getHeight()/6) - (2 * (MainActivity.dpi/160)));
             TextView textView = (TextView) view.findViewById(R.id.calendar_day);
             textView.setTextColor(getContext().getResources().getColor(R.color.opacitywhite));
         }
 
+        // Set today's date cell to a different colour
+        Calendar calendar = Calendar.getInstance();
+        if(displayMonth == calendar.get(Calendar.MONTH) && displayYear == calendar.get(Calendar.YEAR) && dayNo == calendar.get(Calendar.DAY_OF_MONTH)){
+            view.setBackgroundColor(getContext().getResources().getColor(R.color.beige));
+        }
+
 
         TextView dayNumber = view.findViewById(R.id.calendar_day);
         dayNumber.setText(String.valueOf(dayNo));
-        Calendar eventCalendar = Calendar.getInstance();
 
-        int remainSpace = (parent.getHeight()/6) - (2 * (MainActivity.dpi/160)) - (30 * (MainActivity.dpi/160));
-        int numOfNotes = remainSpace/51;
-        Log.d("TRACKING", Integer.toString(numOfNotes));
-        int numOfEvents = 0;
+        Calendar eventCalendar = Calendar.getInstance();
+        int remainSpace = (parent.getHeight()/6) - (2 * (MainActivity.dpi/160)) - (38 * (MainActivity.dpi/160)); //remaining space left in the grid cell to display notes
+        int numOfNotes = remainSpace/51; //number of notes the grid cell can container
+        int numOfEvents = 0; // number of events on the specific day
+        int count = 0;
         for(int i = 0; i < events.size(); i++) {
             eventCalendar.setTime(ConvertStringToDate(events.get(i).getDate())); //set eventCalendar time to the event date
             //Check if display day number matches event day number and if display month matches event month
             if (dayNo == eventCalendar.get(Calendar.DAY_OF_MONTH) && displayMonth == eventCalendar.get(Calendar.MONTH)
                     && displayYear == eventCalendar.get(Calendar.YEAR)) {
+                count++;
+                Log.d("TESTING", Integer.toString(count));
                 numOfEvents++;
                 View container = view.findViewById(R.id.calendar_day_container);
-                if (i == (numOfNotes - 1)){
-                    Log.d("TRACKING","IM IN IF");
+                if (count == numOfNotes){ //When creating the last note the grid cell can contain
+                    Log.d("TESTING", "Im in IF");
                     TextView lastNote = new TextView(view.getContext());
                     lastNote.setTag("lastNote");
                     lastNote.setText(events.get(i).getEvent());
@@ -103,13 +111,13 @@ public class MyGridAdapter extends ArrayAdapter {
                     lastNote.setLayoutParams(params);
                     ((LinearLayout)container).addView(lastNote);
                 }
-                else if(i >= numOfNotes){
-                    Log.d("TRACKING","IM IN ELSE IF");
+                else if(count > numOfNotes){ //When the maximum number of notes have been reached
+                    Log.d("TESTING", "Im in ELSE IF");
                     TextView lastNote = (TextView) container.findViewWithTag("lastNote");
                     lastNote.setText(numOfEvents - numOfNotes + 1 +" more...");
                 }
                 else{
-                    Log.d("TRACKING","IM IN ELSE");
+                    Log.d("TESTING", "Im in ELSE");
                     TextView newNote = new TextView(view.getContext());
                     newNote.setText(events.get(i).getEvent());
                     newNote.setTextColor(getContext().getResources().getColor(R.color.black));

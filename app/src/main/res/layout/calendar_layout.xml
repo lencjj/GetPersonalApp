@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/activity_custom_calendar">
+    android:id="@+id/activity_custom_calendar"
+    android:background="@color/opacitywhite">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,6 +18,22 @@
         android:orientation="horizontal"
         android:id="@+id/calendarNavBar"
         android:layout_weight="0.8">
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:background="#00FFFFFF"
+            android:onClick="onClick"
+            android:scaleType="fitXY"
+            android:src="@drawable/back_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.571" />
 
         <ImageButton
             android:id="@+id/previousBtn"
@@ -38,27 +55,11 @@
             android:text="Current Date"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/backBtn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="10dp"
-            android:background="#00FFFFFF"
-            android:onClick="onClick"
-            android:scaleType="fitXY"
-            android:src="@drawable/back_icon"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.571" />
 
         <ImageButton
             android:id="@+id/nextBtn"
@@ -92,8 +93,7 @@
             android:gravity="center"
             android:text="MON"
             android:textColor="@color/black"
-            android:textSize="17dp"
-            android:textStyle="bold" />
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -103,8 +103,7 @@
             android:gravity="center"
             android:text="TUE"
             android:textColor="@color/black"
-            android:textSize="17dp"
-            android:textStyle="bold" />
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -114,8 +113,7 @@
             android:gravity="center"
             android:text="WED"
             android:textColor="@color/black"
-            android:textSize="17dp"
-            android:textStyle="bold" />
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -125,8 +123,7 @@
             android:gravity="center"
             android:text="THUR"
             android:textColor="@color/black"
-            android:textSize="17dp"
-            android:textStyle="bold" />
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -136,8 +133,7 @@
             android:gravity="center"
             android:text="FRI"
             android:textColor="@color/black"
-            android:textSize="17dp"
-            android:textStyle="bold" />
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -147,8 +143,7 @@
             android:gravity="center"
             android:text="SAT"
             android:textColor="@color/black"
-            android:textSize="17dp"
-            android:textStyle="bold" />
+            android:textSize="17dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -158,8 +153,7 @@
             android:gravity="center"
             android:text="SUN"
             android:textColor="@color/black"
-            android:textSize="17dp"
-            android:textStyle="bold" />
+            android:textSize="17dp" />
 
 
     </LinearLayout>

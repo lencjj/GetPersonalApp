@@ -26,7 +26,7 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <ImageView
-            android:id="@+id/appLogo"
+            android:id="@+id/mainPageAppLogo"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="fitCenter"
@@ -67,7 +67,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.25"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appLogo"
+            app:layout_constraintTop_toBottomOf="@+id/mainPageAppLogo"
             app:layout_constraintVertical_bias="0.025000000"
             app:layout_constraintWidth_percent="0.87">
 

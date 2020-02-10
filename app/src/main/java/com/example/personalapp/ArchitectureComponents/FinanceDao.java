@@ -72,6 +72,10 @@ public interface FinanceDao { // only provide methods
     @Query("SELECT DISTINCT year FROM finance_table")
     LiveData<List<String>> getYearsInRecord();
 
+    @Query("SELECT * FROM finance_table WHERE id=(SELECT max(id) FROM finance_table)")
+    LiveData<Finance> getLastRecord();
+
+
 
 
 

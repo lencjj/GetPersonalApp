@@ -26,7 +26,6 @@
             android:layout_marginLeft="4dp"
             android:layout_marginTop="6dp"
             android:backgroundTint="#00FFFFFF"
-            android:onClick="onClick"
             android:tint="#000000"
             app:srcCompat="@drawable/ic_back" />
 
@@ -44,7 +43,6 @@
             android:layout_marginLeft="220dp"
             android:layout_marginTop="6dp"
             android:backgroundTint="#00FFFFFF"
-            android:onClick="onClick"
             android:tint="#000000"
             app:srcCompat="@drawable/ic_save" />
 

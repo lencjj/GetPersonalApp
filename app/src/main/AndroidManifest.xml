@@ -28,15 +28,17 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".ChangePasswordActivity" />
+        <activity android:name=".AboutActivity" />
 
         <!--    JingHui's-->
         <activity android:name=".MoneyManagement.MainActivity_Finance" />
         <activity android:name=".MoneyManagement.FinanceInputScreen" />
         <receiver android:name=".MoneyManagement.FinanceReminderBroadcast" />
-        <activity android:name=".AboutActivity" />
-        <!--    JingHui's-->
 
-<!--        Kristine-->
+        <!--        Kristine-->
         <activity android:name=".JournalEntry.MainActivity_JournalEntry" />
         <activity android:name=".JournalEntry.AddEditJournalEntryActivity" />
 

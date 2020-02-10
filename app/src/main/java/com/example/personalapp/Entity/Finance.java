@@ -30,6 +30,8 @@ public class Finance {
 
 
 
+    public Finance () {
+    }
 
     public Finance(String memo, Double money) {
         this.memo = memo;

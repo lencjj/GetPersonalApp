@@ -2,7 +2,7 @@
     <string name="app_name">PersonalApp</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <!--    JingHui's-->
 <!--    JingHui's-->
     <string-array name="months">
         <item>All</item>

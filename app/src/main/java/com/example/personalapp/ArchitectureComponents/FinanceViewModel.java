@@ -17,6 +17,7 @@ public class FinanceViewModel extends AndroidViewModel {
     private LiveData<Double> totalExpenses, totalIncomes, totalExpensesByToday, totalIncomesByToday, balanceByToday, balanceByYearmonth;
     private LiveData<List<String>> yearsInRecord;
     private Double balance;
+    private LiveData<Finance> lastRecord;
 
 
 
@@ -38,6 +39,8 @@ public class FinanceViewModel extends AndroidViewModel {
         // String
         yearsInRecord =  repository.getYearsInRecord();
 
+        // Finance
+        lastRecord = repository.getLastRecord();
 
     }
 
@@ -102,6 +105,9 @@ public class FinanceViewModel extends AndroidViewModel {
         return yearsInRecord;
     }
 
+    public LiveData<Finance> getLastRecord() {
+        return lastRecord;
+    }
 
 
 }

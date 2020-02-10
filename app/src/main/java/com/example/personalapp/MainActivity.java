@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.personalapp.ArchitectureComponents.FinanceDao;
 import com.example.personalapp.ArchitectureComponents.FinanceViewModel;
+import com.example.personalapp.Entity.Finance;
 import com.example.personalapp.JournalEntry.MainActivity_JournalEntry;
 import com.example.personalapp.MoneyManagement.FinanceReminderBroadcast;
 import com.example.personalapp.MoneyManagement.MainActivity_Finance;
@@ -51,9 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DBHelper sqDbHelper;
     private DocumentReference docRef;
     private DrawerLayout drawerLayout;
-    private TextView scheduleNotificaion;
+    private TextView scheduleNotificaion, financeNotification;
     private TextView displayUName;
-    private MenuItem logoutItem, aboutItem;
+    private MenuItem aboutItem, settingsItem, logoutItem;
     private NavigationView navigationView;
     private String username = "";
     SimpleDateFormat eventDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // Finance checking
     private FinanceViewModel financeViewModel;
+    private Finance finance;
 
 
     @Override
@@ -74,6 +76,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .of(this)
                 .get(FinanceViewModel.class);
         financeReminderCheck();
+        financeNotification = findViewById(R.id.financeNotification);
+        finance = new Finance();
+        financeViewModel.getLastRecord().observe(this, new Observer<Finance>() {
+            @Override
+            public void onChanged(Finance lastFinance) {
+                finance.setDate(lastFinance.getDate());
+                finance.setTime(lastFinance.getTime());
+                financeNotification.setText("Your last record was on " + finance.getDate() + " " + finance.getTime());
+            }
+        });
+
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() == null){
@@ -118,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Menu menu = (Menu) navigationView.getMenu();
 
         aboutItem = (MenuItem) menu.getItem(0);
+        settingsItem = (MenuItem) menu.getItem(1);
         logoutItem = (MenuItem) menu.getItem(2);
         View view = (View) navigationView.getHeaderView(0);
         displayUName = (TextView) view.findViewById(R.id.username);
@@ -127,12 +142,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         aboutItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                Intent intent1 = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent1);
+                return true;
+            }
+        });
+        settingsItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
             }
         });
-
         logoutItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -231,9 +253,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     alarmManager.set(AlarmManager.RTC_WAKEUP, (timeNow + tenSecondsInMills), pendingIntent);
 
+//                    financeNotification.setText("Your last record was on " + finance.getDate());
+                } else {
+                    financeNotification.setText("You have recorded your expense today! :D");
                 }
             }
         });
     }
+
 
 }
