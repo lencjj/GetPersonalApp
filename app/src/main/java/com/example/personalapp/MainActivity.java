@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
+import com.example.personalapp.JournalEntry.MainActivity_JournalEntry;
 import com.example.personalapp.MoneyManagement.MainActivity_MoneyManagement;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -156,6 +157,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.financeBtn:
                 Intent i1 = new Intent(this, MainActivity_MoneyManagement.class);
                 startActivity(i1);
+                break;
+            case R.id.noteBtn:
+                Intent i2 = new Intent(this, MainActivity_JournalEntry.class);
+                startActivity(i2);
                 break;
         }
     }
