@@ -33,6 +33,7 @@
         <activity android:name=".MoneyManagement.MainActivity_Finance" />
         <activity android:name=".MoneyManagement.FinanceInputScreen" />
         <receiver android:name=".MoneyManagement.FinanceReminderBroadcast" />
+        <activity android:name=".AboutActivity" />
         <!--    JingHui's-->
 
 <!--        Kristine-->

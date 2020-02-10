@@ -5,6 +5,11 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,7 +23,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.personalapp.ArchitectureComponents.FinanceDao;
+import com.example.personalapp.ArchitectureComponents.FinanceViewModel;
 import com.example.personalapp.JournalEntry.MainActivity_JournalEntry;
+import com.example.personalapp.MoneyManagement.FinanceReminderBroadcast;
 import com.example.personalapp.MoneyManagement.MainActivity_Finance;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,17 +53,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DrawerLayout drawerLayout;
     private TextView scheduleNotificaion;
     private TextView displayUName;
-    private MenuItem logoutItem;
+    private MenuItem logoutItem, aboutItem;
     private NavigationView navigationView;
     private String username = "";
     SimpleDateFormat eventDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
     DisplayMetrics metrics = new DisplayMetrics();
     public static int dpi;
 
+    // Finance checking
+    private FinanceViewModel financeViewModel;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Finance checking
+        financeViewModel = ViewModelProviders
+                .of(this)
+                .get(FinanceViewModel.class);
+        financeReminderCheck();
 
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() == null){
@@ -98,10 +116,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         navigationView = (NavigationView) findViewById(R.id.navigationView);
         Menu menu = (Menu) navigationView.getMenu();
-        logoutItem = (MenuItem) menu.getItem(1);
+
+        aboutItem = (MenuItem) menu.getItem(0);
+        logoutItem = (MenuItem) menu.getItem(2);
         View view = (View) navigationView.getHeaderView(0);
         displayUName = (TextView) view.findViewById(R.id.username);
         getUsername();
+
+
+        aboutItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
 
         logoutItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -181,4 +211,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return i;
     }
+
+
+    // Finance checking
+    public void financeReminderCheck() {
+        financeViewModel.getTotalExpensesByToday().observe(this, new Observer<Double>() {
+            @Override
+            public void onChanged(Double aDouble) {
+                if (aDouble == null) {
+                    // Notification ------------------------------------------------------------------------------------------------------------------------------------
+
+                    Intent intent = new Intent(MainActivity.this, FinanceReminderBroadcast.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+                    long timeNow = System.currentTimeMillis();
+                    long tenSecondsInMills = 1000 * 7;
+
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, (timeNow + tenSecondsInMills), pendingIntent);
+
+                }
+            }
+        });
+    }
+
 }

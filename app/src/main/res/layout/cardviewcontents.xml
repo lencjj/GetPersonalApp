@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="4dp"
     android:layout_marginStart="8dp"
     android:layout_marginEnd="8dp"
     app:cardBackgroundColor="#75FFECEC">
@@ -58,7 +58,6 @@
             android:layout_height="wrap_content"
             android:text=""
             android:layout_below="@id/cardtextview_memo"
-
             android:layout_toEndOf="@+id/cardtextview_time"
 
             />

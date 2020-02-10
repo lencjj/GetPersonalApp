@@ -117,6 +117,7 @@
             android:id="@+id/numberpickersArea"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="#33FFFFFF"
             android:backgroundTint="#FFFFFF"
             android:gravity="center"
             android:visibility="gone">
@@ -132,7 +133,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="4dp"
                 android:descendantFocusability="blocksDescendants"
-
+                android:scaleX="1.25"
+                android:scaleY="1.25"
                 />
 
             <TextView
@@ -146,7 +148,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:descendantFocusability="blocksDescendants"
-
+                android:scaleX="1.25"
+                android:scaleY="1.25"
                 />
 
         </LinearLayout>
