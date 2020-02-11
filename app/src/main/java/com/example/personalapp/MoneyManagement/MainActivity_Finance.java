@@ -136,7 +136,6 @@ public class MainActivity_Finance extends AppCompatActivity implements NumberPic
                 getRecordsByYearmonth();
             }
         });
-
         upnarrow_numberpickersarea_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,7 +165,6 @@ public class MainActivity_Finance extends AppCompatActivity implements NumberPic
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity_Finance.this, FinanceInputScreen.class);
                 startActivityForResult(i, ADD_RECORD_REQUEST);
-
             }
         });
 

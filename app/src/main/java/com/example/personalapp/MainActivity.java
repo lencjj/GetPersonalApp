@@ -20,9 +20,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.personalapp.ArchitectureComponents.FinanceDao;
 import com.example.personalapp.ArchitectureComponents.FinanceViewModel;
 import com.example.personalapp.Entity.Finance;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MenuItem aboutItem, settingsItem, logoutItem;
     private NavigationView navigationView;
     private String username = "";
+    private ImageView profilePicView;
     SimpleDateFormat eventDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
     DisplayMetrics metrics = new DisplayMetrics();
     public static int dpi;
@@ -137,6 +140,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         View view = (View) navigationView.getHeaderView(0);
         displayUName = (TextView) view.findViewById(R.id.username);
         getUsername();
+
+        profilePicView = view.findViewById(R.id.displayPicture);
+        if (user.getPhotoUrl() != null) {
+            Glide.with(this)
+                    .load(user.getPhotoUrl())
+                    .into(profilePicView);
+        }
 
 
         aboutItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
